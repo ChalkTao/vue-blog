@@ -1,22 +1,32 @@
 const Home = resolve => {
-  require.ensure(['./views/App.vue'], () => {
-    resolve(require('./views/App.vue'))
+  require.ensure(['./views/Home.vue'], () => {
+    resolve(require('./views/Home.vue'))
   })
 }
 
-const NotFound = resolve => {
-  require.ensure(['./views/NotFound.vue'], () => {
-    resolve(require('./views/NotFound.vue'))
-  })
-}
+import LoginView from './views/Login.vue'
+import RegisterView from './views/Register.vue'
+import NotFoundView from './views/NotFound.vue'
 
-const routers = [{
-  path: '/',
-  name: 'home',
-  component: Home
-}, {
-  path: '*',
-  component: NotFound
-}]
+const routers = [
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView
+  },
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  }, {
+    path: '*',
+    component: NotFoundView
+  }
+]
 
 export default routers

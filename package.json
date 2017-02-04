@@ -79,7 +79,6 @@
     "vue-router": "^2.2.0",
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "^2.1.0",
-    "vue-validator": "^3.0.0-alpha.2",
     "vuex": "^2.1.1",
     "vuex-router-sync": "^4.1.2",
     "webpack": "^1.13.2",
