@@ -9,6 +9,10 @@
 
       <form action="../../index.html" method="post">
         <div class="form-group has-feedback">
+          <input type="text" class="form-control" placeholder="Nickname">
+          <span class="fa fa-user-circle-o form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
           <input type="email" class="form-control" placeholder="Email">
           <span class="fa fa-envelope form-control-feedback"></span>
         </div>
@@ -18,7 +22,7 @@
         </div>
         <div class="form-group has-feedback">
           <input type="password" class="form-control" placeholder="Admin Password">
-          <span class="fa fa-user-circle-o form-control-feedback"></span>
+          <span class="fa fa-sign-in form-control-feedback"></span>
         </div>
         <div class="row">
 

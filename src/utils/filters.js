@@ -35,3 +35,7 @@ exports.formatDate = time => {
   let day = tmpDate.getDate()
   return year + '/' + month + '/' + day
 }
+
+exports.count = arr => {
+  return arr.length
+}

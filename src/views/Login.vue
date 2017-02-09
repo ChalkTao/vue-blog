@@ -7,13 +7,13 @@
       <!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Sign in to start</p>
-        <form action="../../index2.html" method="post">
+        <form @submit.prevent="login()">
           <div class="form-group has-feedback">
-            <input type="email" class="form-control" placeholder="Email">
+            <input type="email" class="form-control" placeholder="Email" v-model="email">
             <span class="fa fa-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Password">
+            <input type="password" class="form-control" placeholder="Password" v-model="password">
             <span class="fa fa-lock form-control-feedback"></span>
           </div>
           <div class="row">
@@ -43,64 +43,20 @@
       return {
         section: 'Login',
         loading: '',
-        username: '',
+        email: '',
         password: '',
         response: ''
       }
     },
     methods: {
-      checkCreds: function () {
-        //  Change submit button
-        var self = this
-        var store = this.$store
-
+      login: function () {
         this.toggleLoading()
         this.resetResponse()
-        store.dispatch('TOGGLE_LOADING')
-
-        //  Login
-        this.$parent.callAPI('POST', '/login', { username: this.username, password: this.password }).then(function (response) {
-          store.dispatch('TOGGLE_LOADING')
-
-          if (response.data) {
-            var data = response.data
-
-            if (data.error) {
-              if (data.error.name) { //  Object from LDAP at this point
-                switch (data.error.name) {
-                  case 'InvalidCredentialsError' : self.response = 'Username/Password incorrect. Please try again.'; break
-                  default: self.response = data.error.name
-                }
-              } else {
-                self.response = data.error
-              }
-            } else {
-              //  success. Let's load up the dashboard
-              if (data.user) {
-                store.dispatch('SET_USER', data.user)
-                var token = 'Bearer ' + data.token
-                store.dispatch('SET_TOKEN', token)
-
-                // Save to local storage as well
-                if (window.localStorage) {
-                  window.localStorage.setItem('user', JSON.stringify(data.user))
-                  window.localStorage.setItem('token', token)
-                }
-
-                this.$router.push(data.redirect)
-              }
-            }
-          } else {
-            self.response = 'Did not receive a response. Please try again in a few minutes'
-          }
-
-          self.toggleLoading()
-        }, function (response) {
-          // error
-          store.dispatch('TOGGLE_LOADING')
-          console.log('Error', response)
-          self.response = 'Server appears to be offline'
-          self.toggleLoading()
+        this.$store.commit('TOGGLE_LOADING')
+        this.$http.post('local/login', {foo: 'bar'}).then(response => {
+          window.console.log(response.data)
+        }, response => {
+          // error callback
         })
       },
       toggleLoading: function () {
@@ -108,6 +64,9 @@
       },
       resetResponse: function () {
         this.response = ''
+      },
+      showMsg: function (title, desc) {
+        window.console.log(title)
       }
     }
   }

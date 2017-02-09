@@ -7,6 +7,7 @@ const Home = resolve => {
 import LoginView from './views/Login.vue'
 import RegisterView from './views/Register.vue'
 import NotFoundView from './views/NotFound.vue'
+import AdminView from './views/Admin.vue'
 
 const routers = [
   {
@@ -18,6 +19,18 @@ const routers = [
     path: '/register',
     name: 'register',
     component: RegisterView
+  },
+  {
+    path: '/admin',
+    component: AdminView,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'Dashboard',
+        description: 'Overview of environment'
+      }
+    ]
   },
   {
     path: '/',
