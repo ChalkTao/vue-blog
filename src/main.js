@@ -8,14 +8,15 @@ import filters from './utils/filters'
 import routes from './routes'
 import AppView from './views/App.vue'
 import config from '../config'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
+Vue.use(ElementUI)
 
 Vue.http.options.crossOrigin = true
 Vue.http.options.credentials = true
-Vue.http.options.xhr = { withCredentials: true }
-Vue.http.options.emulateJSON = true
 Vue.http.options.root = config.dev.env.API_ROOT
 Vue.http.interceptors.push((request, next) => {
   // 这里对请求体进行处理

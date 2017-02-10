@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="login-box">
+    <div class="login-box" v-loading="loading">
       <div class="login-logo">
         <router-link to="/">Sign in <b>Chalk</b></router-link>
       </div>
@@ -41,32 +41,28 @@
     name: 'Login',
     data: function (router) {
       return {
-        section: 'Login',
-        loading: '',
+        loading: false,
         email: '',
-        password: '',
-        response: ''
+        password: ''
       }
     },
     methods: {
       login: function () {
-        this.toggleLoading()
-        this.resetResponse()
+        this.loading = true
         this.$store.commit('TOGGLE_LOADING')
-        this.$http.post('local/login', {foo: 'bar'}).then(response => {
+        this.$http.post('auth/local/login', {email: this.email, password: this.password}).then(response => {
           window.console.log(response.data)
+          this.$store.dispatch('SET_TOKEN', response.data.token)
+          if (window.localStorage) {
+            window.localStorage.setItem('token', response.data.token)
+          }
+          let redirect = decodeURIComponent(this.$route.query.redirect || '/')
+          this.$router.push({ path: redirect })
         }, response => {
-          // error callback
+          var msg = response.data.err_msg || '登录失败'
+          this.$message.error(msg)
+          this.loading = false
         })
-      },
-      toggleLoading: function () {
-        this.loading = (this.loading === '') ? 'loading' : ''
-      },
-      resetResponse: function () {
-        this.response = ''
-      },
-      showMsg: function (title, desc) {
-        window.console.log(title)
       }
     }
   }

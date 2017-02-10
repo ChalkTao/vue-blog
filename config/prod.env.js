@@ -1,5 +1,5 @@
 module.exports = {
   NODE_ENV: '"production"',
-  API_ROOT: 'localhost:9000',
+  API_ROOT: 'http://localhost:9000',
   COOKIE_DOMAIN: ""
 }
