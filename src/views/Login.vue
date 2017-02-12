@@ -52,14 +52,17 @@
         this.$store.commit('TOGGLE_LOADING')
         this.$http.post('auth/local/login', {email: this.email, password: this.password}).then(response => {
           window.console.log(response.data)
-          this.$store.dispatch('SET_TOKEN', response.data.token)
+          this.$store.commit('SET_TOKEN', response.data.token)
+          this.$store.commit('SET_USER', response.data.user)
           if (window.localStorage) {
             window.localStorage.setItem('token', response.data.token)
+            window.localStorage.setItem('user', JSON.stringify(response.data.user))
           }
-          let redirect = decodeURIComponent(this.$route.query.redirect || '/')
+          this.loading = false
+          let redirect = decodeURIComponent(this.$route.query.redirect || '/admin')
           this.$router.push({ path: redirect })
         }, response => {
-          var msg = response.data.err_msg || '登录失败'
+          var msg = response.data.error_msg || '登录失败'
           this.$message.error(msg)
           this.loading = false
         })

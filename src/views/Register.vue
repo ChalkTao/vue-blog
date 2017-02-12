@@ -60,13 +60,16 @@
           admin: this.admin
         }).then(response => {
           window.console.log(response.data)
-          this.$store.dispatch('SET_TOKEN', response.data.token)
+          this.$store.commit('SET_TOKEN', response.data.token)
+          this.$store.commit('SET_USER', response.data.user)
           if (window.localStorage) {
             window.localStorage.setItem('token', response.data.token)
+            window.localStorage.setItem('user', JSON.stringify(response.data.user))
           }
-//          this.$router.push(data.redirect)
+          this.loading = false
+          this.$router.push({name: 'admin'})
         }, response => {
-          var msg = response.data.err_msg || '注册失败'
+          var msg = response.data.error_msg || '注册失败'
           this.$message.error(msg)
           this.loading = false
         })

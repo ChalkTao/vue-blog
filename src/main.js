@@ -9,11 +9,13 @@ import routes from './routes'
 import AppView from './views/App.vue'
 import config from '../config'
 import ElementUI from 'element-ui'
+import VueSimplemde from 'vue-simplemde'
 import 'element-ui/lib/theme-default/index.css'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.use(ElementUI)
+Vue.use(VueSimplemde)
 
 Vue.http.options.crossOrigin = true
 Vue.http.options.credentials = true
@@ -21,7 +23,6 @@ Vue.http.options.root = config.dev.env.API_ROOT
 Vue.http.interceptors.push((request, next) => {
   // 这里对请求体进行处理
   request.headers = request.headers || {}
-  request.headers.set('X-CSRF-TOKEN', 'TOKEN')
   if (window.localStorage && window.localStorage.getItem('token')) {
     request.headers.Authorization = 'Bearer ' + window.localStorage.getItem('token').replace(/(^")|("$)/g, '')
   }
@@ -45,10 +46,15 @@ const router = new VueRouter({
   }
 })
 
+if (window.localStorage) {
+  if (store.state.token !== window.localStorage.getItem('token')) {
+    store.commit('SET_USER', JSON.parse(window.localStorage.getItem('user')))
+    store.commit('SET_TOKEN', window.localStorage.getItem('token'))
+  }
+}
+
 router.beforeEach((to, from, next) => {
-  // window.console.log('Transition', transition)
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    window.console.log('Not authenticated')
     if (store.state.token) {
       next()
     } else {
@@ -67,4 +73,4 @@ new Vue({
   store: store,
   render: h => h(AppView)
 }).$mount('#root')
-window.router = router
+

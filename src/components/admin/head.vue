@@ -4,7 +4,7 @@
       <!-- mini logo for sidebar mini 40x50 pixels -->
       <span class="logo-mini"><b>C</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Chalk</b>LTE</span>
+      <span class="logo-lg"><b>Chalk</b>Blog</span>
     </a>
 
     <!-- Header Navbar -->
@@ -109,10 +109,7 @@
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
-              <img :src="''" class="user-image" alt="User Image">
-              <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">{{ "test" }}</span>
+              <span class="hidden-xs">{{ state.user.nickname }}</span>
             </a>
           </li>
         </ul>
@@ -125,15 +122,6 @@
   module.exports = {
     data: function () {
       return {
-        section: 'Dash',
-        me: '',
-        error: '',
-        api: {
-          servers: {
-            url: '', // Back end server
-            result: []
-          }
-        }
       }
     },
     computed: {
@@ -142,22 +130,9 @@
       },
       state: function () {
         return this.store.state
-      },
-      callAPI: function () {
-        return this.$parent.callAPI
       }
     },
     methods: {
-      changeloading: function () {
-        this.store.dispatch('TOGGLE_SEARCHING')
-      },
-      toggleMenu: function (event) {
-        // remove active from li
-        window.$('li.pageLink').removeClass('active')
-
-        // Add it to the item that was clicked
-        event.toElement.parentElement.className = 'pageLink active'
-      }
     }
   }
 </script>

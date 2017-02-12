@@ -1,34 +1,28 @@
 <template>
   <div>
-    <AdminHeader></AdminHeader>
+    <AdminHeader v-show="show"></AdminHeader>
+    <AdminSide v-show="show"></AdminSide>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
   import AdminHeader from '../components/admin/head.vue'
+  import AdminSide from '../components/admin/side.vue'
   export default {
     name: 'App',
-    components: {AdminHeader},
+    components: {AdminHeader, AdminSide},
     data: function () {
       return {
         section: 'Head',
-        version: '0.10.0',
         callingAPI: false,
-        serverURI: 'http://10.110.1.10:8080',
-        caller: this.$http
+        show: true
       }
-    }
-//    methods: {
-//      callAPI: function (method, url, data) {
-//        this.callingAPI = true
-//        url = url || this.serverURI // if no url is passed then inheret local server URI
-//        return this.caller({
-//          url: url,
-//          method: method,
-//          data: data
-//        })
-//      },
+    },
+    methods: {
+      fullScreen: function (fullScreen) {
+        this.show = !fullScreen
+      }
 //      logout: function () {
 //        this.$store.dispatch('SET_USER', null)
 //        this.$store.dispatch('SET_TOKEN', null)
@@ -40,6 +34,6 @@
 //
 //        this.$router.push('/login')
 //      }
-//    }
+    }
   }
 </script>
