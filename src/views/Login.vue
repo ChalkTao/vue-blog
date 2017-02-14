@@ -51,7 +51,6 @@
         this.loading = true
         this.$store.commit('TOGGLE_LOADING')
         this.$http.post('auth/local/login', {email: this.email, password: this.password}).then(response => {
-          window.console.log(response.data)
           this.$store.commit('SET_TOKEN', response.data.token)
           this.$store.commit('SET_USER', response.data.user)
           if (window.localStorage) {

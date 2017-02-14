@@ -24,15 +24,15 @@ Vue.http.interceptors.push((request, next) => {
   // 这里对请求体进行处理
   request.headers = request.headers || {}
   if (window.localStorage && window.localStorage.getItem('token')) {
-    request.headers.Authorization = 'Bearer ' + window.localStorage.getItem('token').replace(/(^")|("$)/g, '')
+    Vue.http.headers.common.Authorization = 'Bearer ' + window.localStorage.getItem('token').replace(/(^")|("$)/g, '')
   }
   next((response) => {
-    if (response.status === 401) {
-      if (window.localStorage) {
-        window.localStorage.setItem('token', null)
-      }
-      window.router.go({path: '/login'})
-    }
+    // if (response.status === 401) {
+    //   if (window.localStorage) {
+    //     window.localStorage.setItem('token', null)
+    //   }
+      // router.go({path: '/login'})
+    // }
   })
 })
 

@@ -9,6 +9,7 @@ import RegisterView from './views/Register.vue'
 import NotFoundView from './views/NotFound.vue'
 import AdminView from './views/Admin.vue'
 import NewArticleView from './views/Article_New.vue'
+import CalendarView from './views/Calendar.vue'
 
 const routers = [
   {
@@ -27,14 +28,19 @@ const routers = [
     meta: { requiresAuth: true },
     children: [
       {
-        path: '/',
+        path: '',
         name: 'admin_dashboard',
         description: 'dashboard'
       },
       {
-        path: '/article_new',
-        name: 'article_new',
+        path: 'article/:aid',
+        name: 'article',
         component: NewArticleView
+      },
+      {
+        path: 'calendar',
+        name: 'calendar',
+        component: CalendarView
       }
     ]
   },

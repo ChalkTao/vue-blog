@@ -1,27 +1,75 @@
 <template>
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        General Form Elements
-        <small>Preview</small>
+        新建文章
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
-      </ol>
     </section>
 
     <!-- Main content -->
-    <section class="content">
-      <markdown-editor v-model="content" ref="markdownEditor"></markdown-editor>
+    <section class="content" v-loading="loading">
+      <div class="row">
+        <el-form ref="article" :model="article" :rules="rules" label-width="90px">
+        <div class="col-md-7">
+          <div class="box box-primary">
+              <div class="box-body">
+                  <el-form-item label="文章题目" prop="title">
+                    <el-input v-model="article.title"></el-input>
+                  </el-form-item>
+                  <el-form-item label="文章标签">
+                    <el-select v-model="article.labels"
+                               multiple
+                               filterable
+                               allow-create
+                               placeholder="请选择文章标签">
+                      <el-option
+                        v-for="item in labels"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+              </div>
+
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="box box-primary">
+              <div class="box-body">
+                  <el-form-item label="文章分类" prop="category">
+                    <el-select v-model="article.category" placeholder="请选择">
+                      <el-option
+                        v-for="item in categories"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="同时发布">
+                    <el-col :span="8">
+                      <el-switch on-text="" off-text="" v-model="article.publish"></el-switch>
+                    </el-col>
+                    <div class="pull-right">
+                      <button type="submit" class="btn btn-primary" @click.prevent="onSubmit('article')">保存</button>
+                      <button class="btn btn-default">取消</button>
+                    </div>
+                  </el-form-item>
+              </div>
+            </div>
+        </div>
+        </el-form>
+      </div>
+
+      <div>
+        <markdown-editor v-model="article.content" ref="markdownEditor"></markdown-editor>
+      </div>
+
     </section>
   </div>
 </template>
 
 <script>
-  import { markdownEditor } from 'vue-simplemde'
+  import {markdownEditor} from 'vue-simplemde'
 
   // 基础用法
   export default {
@@ -30,10 +78,61 @@
     },
     data () {
       return {
-        content: '',
+        article: {
+          _id: '',
+          title: '',
+          content: '',
+          category: '',
+          publish: false,
+          labels: []
+        },
+        rules: {
+          title: [
+            { required: true, message: '请输入文章标题', trigger: 'blur' },
+            { min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur' }
+          ],
+          category: [
+            { required: true, message: '请选择分类', trigger: 'change' }
+          ]
+        },
         configs: {
           spellChecker: false // 禁用拼写检查
-        }
+        },
+        loading: false,
+        labels: [{
+          value: 'HTML',
+          label: 'HTML'
+        }, {
+          value: 'CSS',
+          label: 'CSS'
+        }, {
+          value: 'JavaScript',
+          label: 'JavaScript'
+        }],
+        categories: [{
+          value: 'back',
+          label: '后端'
+        }]
+      }
+    },
+    methods: {
+      onSubmit (formName) {
+        const _this = this
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            _this.$http.put('article/' + _this.article._id, _this.article).then(response => {
+              window.console.log(response.data)
+              _this.$message.success('成功')
+            }, response => {
+              var msg = response.data.error_msg || '创建失败'
+              _this.$message.error(msg)
+              _this.loading = false
+            })
+          } else {
+            _this.$message.error('保存错误')
+            return false
+          }
+        })
       }
     },
     computed: {
@@ -42,6 +141,15 @@
       }
     },
     mounted () {
+      const _this = this
+      this.$http.get('article/' + this.$route.params.aid).then(response => {
+        var article = response.data.data
+        Object.assign(_this.article, article)
+      }, response => {
+        var msg = response.data.error_msg || '创建失败'
+        this.$message.error(msg)
+        this.loading = false
+      })
       this.simplemde.codemirror.on('optionChange', (instance, changeObj) => {
         console.log(changeObj)
         if (changeObj === 'fullScreen') {
@@ -52,3 +160,12 @@
   }
 
 </script>
+
+<style scoped>
+  .el-form-item {
+    margin-bottom: 18px;
+  }
+  .el-select {
+    width: 100%;
+  }
+</style>
