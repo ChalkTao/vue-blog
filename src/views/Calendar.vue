@@ -93,3 +93,8 @@
     <!-- /.content -->
   </div>
 </template>
+<script>
+  require('../../static/js/plugins/fullcalendar/fullcalendar.min.css')
+  require('../../static/js/plugins/fullcalendar/fullcalendar.print.css')
+
+</script>

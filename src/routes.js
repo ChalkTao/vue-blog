@@ -9,6 +9,7 @@ import RegisterView from './views/Register.vue'
 import NotFoundView from './views/NotFound.vue'
 import AdminView from './views/Admin.vue'
 import NewArticleView from './views/Article_New.vue'
+import ArticleView from './views/Article.vue'
 import CalendarView from './views/Calendar.vue'
 
 const routers = [
@@ -36,6 +37,11 @@ const routers = [
         path: 'article/:aid',
         name: 'article',
         component: NewArticleView
+      },
+      {
+        path: 'articles',
+        name: 'articles',
+        component: ArticleView
       },
       {
         path: 'calendar',

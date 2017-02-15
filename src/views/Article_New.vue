@@ -17,15 +17,9 @@
                     <el-input v-model="article.title"></el-input>
                   </el-form-item>
                   <el-form-item label="文章标签">
-                    <el-select v-model="article.labels"
-                               multiple
-                               filterable
-                               allow-create
+                    <el-select v-model="article.labels" multiple filterable allow-create
                                placeholder="请选择文章标签">
-                      <el-option
-                        v-for="item in labels"
-                        :label="item.label"
-                        :value="item.value">
+                      <el-option v-for="item in labels" :label="item" :value="item">
                       </el-option>
                     </el-select>
                   </el-form-item>
@@ -37,11 +31,8 @@
           <div class="box box-primary">
               <div class="box-body">
                   <el-form-item label="文章分类" prop="category">
-                    <el-select v-model="article.category" placeholder="请选择">
-                      <el-option
-                        v-for="item in categories"
-                        :label="item.label"
-                        :value="item.value">
+                    <el-select v-model="article.category" placeholder="请选择" @change="handleChange">
+                      <el-option v-for="item in categories" :label="item" :value="item">
                       </el-option>
                     </el-select>
                   </el-form-item>
@@ -99,20 +90,9 @@
           spellChecker: false // 禁用拼写检查
         },
         loading: false,
-        labels: [{
-          value: 'HTML',
-          label: 'HTML'
-        }, {
-          value: 'CSS',
-          label: 'CSS'
-        }, {
-          value: 'JavaScript',
-          label: 'JavaScript'
-        }],
-        categories: [{
-          value: 'back',
-          label: '后端'
-        }]
+        labels: [],
+        categories: [],
+        categoryInfo: {}
       }
     },
     methods: {
@@ -133,6 +113,26 @@
             return false
           }
         })
+      },
+      handleChange (value) {
+        console.log(value)
+        const _this = this
+        if (value === '新建分类') {
+          this.$prompt('分类名称', '创建分类', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+          }).then(({ value }) => {
+            _this.categories.splice(0, 0, value)
+            _this.article.category = value
+          }).catch(() => {
+            _this.article.category = ''
+          })
+          _this.labels = []
+        } else if (_this.categoryInfo[value]) {
+          _this.labels = _this.categoryInfo[_this.article.category].labels
+        } else {
+          _this.labels = []
+        }
       }
     },
     computed: {
@@ -142,6 +142,7 @@
     },
     mounted () {
       const _this = this
+      const uid = this.$store.state.user._id
       this.$http.get('article/' + this.$route.params.aid).then(response => {
         var article = response.data.data
         Object.assign(_this.article, article)
@@ -149,6 +150,19 @@
         var msg = response.data.error_msg || '创建失败'
         this.$message.error(msg)
         this.loading = false
+      })
+      this.$http.get('article/category/' + uid).then(response => {
+        var categoryInfo = response.data.data
+        categoryInfo.forEach(item => {
+          _this.categoryInfo[item.category] = item
+        })
+        _this.categories = categoryInfo.map(item => {
+          return item.category
+        })
+        _this.categories.push('新建分类')
+      }, response => {
+        var msg = response.data.error_msg || '获取分类失败'
+        this.$message.error(msg)
       })
       this.simplemde.codemirror.on('optionChange', (instance, changeObj) => {
         console.log(changeObj)
