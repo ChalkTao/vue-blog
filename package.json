@@ -15,6 +15,7 @@
   "dependencies": {
     "element-ui": "^1.1.6",
     "vue": "^2.1.0",
+    "vue-fullcalendar": "^1.0.9",
     "vue-router": "^2.2.0",
     "vuex": "^2.1.1",
     "webpack-zepto": "^0.0.1"
@@ -82,6 +83,7 @@
     "vue-simplemde": "^0.3.2",
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "^2.1.0",
+    "vuedraggable": "^2.8.3-rc0",
     "vuex": "^2.1.1",
     "vuex-router-sync": "^4.1.2",
     "webpack": "^1.13.2",

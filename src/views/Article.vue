@@ -6,7 +6,6 @@
       </h1>
     </section>
 
-    <!-- Main content -->
     <section class="content" v-loading="loading">
       <div class="row">
         <el-form ref="article" :model="article" :rules="rules" label-width="90px">
@@ -24,7 +23,6 @@
                     </el-select>
                   </el-form-item>
               </div>
-
           </div>
         </div>
         <div class="col-md-5">
@@ -62,7 +60,6 @@
 <script>
   import {markdownEditor} from 'vue-simplemde'
 
-  // 基础用法
   export default {
     components: {
       markdownEditor

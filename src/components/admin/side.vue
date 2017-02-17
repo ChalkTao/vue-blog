@@ -17,12 +17,12 @@
         <li class="pageLink" @click="toggleMenu"><router-link :to="{name: 'article', params: { aid: 'new' }}"><i class="fa fa-file-o"></i><span class="page">写文章</span></router-link></li>
         <li class="pageLink" @click="toggleMenu"><router-link :to="{name: 'articles'}"><i class="fa fa-list"></i><span class="page">全部文章</span></router-link></li>
 
-        <li class="header">任务</li>
+        <li class="header">日历</li>
         <li class="pageLink" @click="toggleMenu"><router-link :to="{name: 'calendar'}"><i class="fa fa-calendar"></i><span class="page">日历</span></router-link></li>
+        <li class="pageLink" @click="toggleMenu"><router-link :to="{name: 'task'}"><i class="fa fa-tasks"></i><span class="page">任务</span></router-link></li>
 
         <li class="header">个人</li>
-        <li class="pageLink" @click="toggleMenu"><router-link to="/tasks"><i class="fa fa-tasks"></i><span class="page">Tasks</span></router-link></li>
-        <li class="pageLink" @click="toggleMenu"><router-link to="/setting"><i class="fa fa-cog"></i><span class="page">Settings</span></router-link></li>
+        <li class="pageLink" @click="toggleMenu"><router-link to="/setting"><i class="fa fa-cog"></i><span class="page">设置</span></router-link></li>
 
       </ul>
     </section>

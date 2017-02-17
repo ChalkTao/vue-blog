@@ -11,6 +11,7 @@ import AdminView from './views/Admin.vue'
 import ArticleView from './views/Article.vue'
 import ArticlesView from './views/Articles.vue'
 import CalendarView from './views/Calendar.vue'
+import TaskView from './views/Task.vue'
 
 const routers = [
   {
@@ -47,6 +48,11 @@ const routers = [
         path: 'calendar',
         name: 'calendar',
         component: CalendarView
+      },
+      {
+        path: 'task',
+        name: 'task',
+        component: TaskView
       }
     ]
   },
