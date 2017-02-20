@@ -37,26 +37,6 @@
       title: 'Sunny Out of Office',
       start: '2017-02-16',
       end: '2017-02-18'
-    },
-    {
-      title: 'Sunny Out of Office',
-      start: '2017-02-16',
-      end: '2017-02-18'
-    },
-    {
-      title: 'Sunny Out of Office',
-      start: '2017-02-16',
-      end: '2017-02-18'
-    },
-    {
-      title: 'Sunny Out of Office',
-      start: '2017-02-16',
-      end: '2017-02-18'
-    },
-    {
-      title: 'Sunny Out of Office',
-      start: '2017-02-16',
-      end: '2017-02-18'
     }
   ]
   export default {
@@ -73,7 +53,8 @@
         console.log(start, end, current)
       },
       dayClick (day) {
-        console.log(day)
+        console.log(this.$parent.formatDate(day))
+        this.$router.push({name: 'task', params: {day: this.$parent.formatDate(day)}})
       },
       eventClick (event) {
         console.log(event)
@@ -83,6 +64,6 @@
 </script>
 <style>
   .full-calendar-body .events-day {
-    min-height: 96px !important;
+    min-height: 98px !important;
   }
 </style>

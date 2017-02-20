@@ -22,6 +22,16 @@
     methods: {
       fullScreen: function (fullScreen) {
         this.show = !fullScreen
+      },
+      formatDate: function (time) {
+        let tmpDate = new Date(time)
+        let year = tmpDate.getFullYear()
+        let month = this.fill(tmpDate.getMonth() + 1)
+        let day = this.fill(tmpDate.getDate())
+        return year + '-' + month + '-' + day
+      },
+      fill: function (num) {
+        return num >= 10 ? num : '0' + num
       }
 //      logout: function () {
 //        this.$store.dispatch('SET_USER', null)

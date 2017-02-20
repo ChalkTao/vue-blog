@@ -50,7 +50,7 @@ const routers = [
         component: CalendarView
       },
       {
-        path: 'task',
+        path: 'task/:day',
         name: 'task',
         component: TaskView
       }
