@@ -48,6 +48,7 @@
   import draggable from 'vuedraggable'
 
   export default {
+    props: ['day'],
     components: {
       draggable
     },
@@ -131,18 +132,15 @@
     },
     computed: {},
     mounted () {
-      var current = this.$route.params.day
-      if (current === '' || current === 'now') {
-        this.currentDay = this.$parent.$parent.formatDate(new Date())
-      } else {
-        this.currentDay = current
-      }
-      this.$http.get('goal/' + this.currentDay).then(response => {
-        this.goal = response.data.data
-        this.sort()
-      }, response => {
-        var msg = response.data.error_msg || '获取失败'
-        this.$message.error(msg)
+      this.$watch('day', function () {
+        this.currentDay = this.day
+        this.$http.get('goal/' + this.currentDay).then(response => {
+          this.goal = response.data.data
+          this.sort()
+        }, response => {
+          var msg = response.data.error_msg || '获取失败'
+          this.$message.error(msg)
+        })
       })
     }
   }

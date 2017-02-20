@@ -109,6 +109,7 @@
   import draggable from 'vuedraggable'
 
   export default {
+    props: ['day'],
     components: {
       draggable
     },
@@ -238,33 +239,29 @@
     computed: {
     },
     mounted () {
-      var current = this.$route.params.day
-      if (current === '' || current === 'now') {
-        this.currentDay = this.$parent.$parent.formatDate(new Date())
-      } else {
-        this.currentDay = current
-      }
-      console.log(this.currentDay)
-      this.$http.get('task/daily/' + this.currentDay).then(response => {
-        this.tasks = response.data.data.tasks || []
-        var finished = response.data.data.finished || []
-        this.finished = finished.map(item => {
-          item.status = true
-          return item
+      this.$watch('day', function () {
+        this.currentDay = this.day
+        this.$http.get('task/daily/' + this.day).then(response => {
+          this.tasks = response.data.data.tasks || []
+          var finished = response.data.data.finished || []
+          this.finished = finished.map(item => {
+            item.status = true
+            return item
+          })
+          var scores = response.data.data.scores || []
+          this.scores = scores.map(item => {
+            if (item.score > 0) {
+              item.score = '+' + item.score + '分'
+            } else {
+              item.score = item.score + '分'
+            }
+            return item
+          })
+          this.state = response.data.data.state
+        }, response => {
+          var msg = response.data.error_msg || '获取失败'
+          this.$message.error(msg)
         })
-        var scores = response.data.data.scores || []
-        this.scores = scores.map(item => {
-          if (item.score > 0) {
-            item.score = '+' + item.score + '分'
-          } else {
-            item.score = item.score + '分'
-          }
-          return item
-        })
-        this.state = response.data.data.state
-      }, response => {
-        var msg = response.data.error_msg || '获取失败'
-        this.$message.error(msg)
       })
     }
   }
