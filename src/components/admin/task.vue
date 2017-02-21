@@ -142,6 +142,7 @@
           var msg = (response.data && response.data.error_msg) || '更新失败'
           this.$message.error(msg)
         })
+        this.$store.commit('SET_TASKS', this.tasks)
       },
       updateScore: function () {
         var scores = this.scores.map(item => {
@@ -244,8 +245,8 @@
         return day >= 0
       }
     },
-    mounted () {
-      this.$watch('day', function () {
+    watch: {
+      'day' () {
         this.currentDay = this.day
         this.$http.get('task/daily/' + this.day).then(response => {
           this.tasks = response.data.data.tasks || []
@@ -268,7 +269,7 @@
           var msg = (response.data && response.data.error_msg) || '获取失败'
           this.$message.error(msg)
         })
-      })
+      }
     }
   }
 

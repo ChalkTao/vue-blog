@@ -3,15 +3,17 @@
     <AdminHeader v-show="show"></AdminHeader>
     <AdminSide v-show="show"></AdminSide>
     <router-view></router-view>
+    <NvTop></NvTop>
   </div>
 </template>
 
 <script>
   import AdminHeader from '../components/admin/head.vue'
   import AdminSide from '../components/admin/side.vue'
+  import NvTop from '../components/backtotop.vue'
   export default {
     name: 'App',
-    components: {AdminHeader, AdminSide},
+    components: {AdminHeader, AdminSide, NvTop},
     data: function () {
       return {
         section: 'Head',
