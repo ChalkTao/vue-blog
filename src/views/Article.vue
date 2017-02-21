@@ -102,7 +102,7 @@
               _this.$message.success('成功')
               _this.$router.push({name: 'articles'})
             }, response => {
-              var msg = response.data.error_msg || '创建失败'
+              var msg = (response.data && response.data.error_msg) || '创建失败'
               _this.$message.error(msg)
               _this.loading = false
             })
@@ -148,7 +148,7 @@
         var article = response.data.data
         Object.assign(_this.article, article)
       }, response => {
-        var msg = response.data.error_msg || '创建失败'
+        var msg = (response.data && response.data.error_msg) || '创建失败'
         this.$message.error(msg)
         this.loading = false
       })
@@ -162,7 +162,7 @@
         })
         _this.categories.push('新建分类')
       }, response => {
-        var msg = response.data.error_msg || '获取分类失败'
+        var msg = (response.data && response.data.error_msg) || '获取分类失败'
         this.$message.error(msg)
       })
       this.simplemde.codemirror.on('optionChange', (instance, changeObj) => {

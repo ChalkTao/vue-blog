@@ -69,7 +69,7 @@
           this.loading = false
           this.$router.push({name: 'admin'})
         }, response => {
-          var msg = response.data.error_msg || '注册失败'
+          var msg = (response.data && response.data.error_msg) || '注册失败'
           this.$message.error(msg)
           this.loading = false
         })

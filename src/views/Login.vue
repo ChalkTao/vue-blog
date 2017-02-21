@@ -61,7 +61,7 @@
           let redirect = decodeURIComponent(this.$route.query.redirect || '/admin')
           this.$router.push({ path: redirect })
         }, response => {
-          var msg = response.data.error_msg || '登录失败'
+          var msg = (response.data && response.data.error_msg) || '登录失败'
           this.$message.error(msg)
           this.loading = false
         })

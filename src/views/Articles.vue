@@ -131,7 +131,7 @@
           _this.total = response.data.count
           this.loading = false
         }, response => {
-          var msg = response.data.error_msg || '获取失败'
+          var msg = (response.data && response.data.error_msg) || '获取失败'
           this.$message.error(msg)
           this.loading = false
         })
@@ -199,7 +199,7 @@
           return item.category
         })
       }, response => {
-        var msg = response.data.error_msg || '获取分类失败'
+        var msg = (response.data && response.data.error_msg) || '获取分类失败'
         this.$message.error(msg)
       })
     }

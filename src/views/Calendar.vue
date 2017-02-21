@@ -7,53 +7,34 @@
 </template>
 <script>
   import fullCalendar from 'vue-fullcalendar'
-  var demoEvents = [
-    {
-      title: 'Sunny Out of Office',
-      start: '2016-08-25',
-      end: '2017-07-27'
-    },
-    {
-      title: 'Sunny Out of Office',
-      start: '2017-02-16',
-      end: '2017-02-18'
-    },
-    {
-      title: 'Sunny Out of Office',
-      start: '2017-02-16',
-      end: '2017-02-18'
-    },
-    {
-      title: 'Sunny Out of Office',
-      start: '2017-02-16',
-      end: '2017-02-18'
-    },
-    {
-      title: 'Sunny Out of Office',
-      start: '2017-02-16',
-      end: '2017-02-18'
-    },
-    {
-      title: 'Sunny Out of Office',
-      start: '2017-02-16',
-      end: '2017-02-18'
-    }
-  ]
   export default {
     components: {
       'full-calendar': fullCalendar
     },
     data () {
       return {
-        fcEvents: demoEvents
+        fcEvents: [],
+        loading: false
       }
     },
     methods: {
       changeMonth (start, end, current) {
         console.log(start, end, current)
+        this.$http.get('task/calendar', {
+          params: {
+            start: start,
+            end: end
+          }
+        }).then(response => {
+          this.fcEvents = response.data.data
+          this.loading = false
+        }, response => {
+          var msg = (response.data && response.data.error_msg) || '获取失败'
+          this.$message.error(msg)
+          this.loading = false
+        })
       },
       dayClick (day) {
-        console.log(this.$parent.formatDate(day))
         this.$router.push({name: 'task', params: {day: this.$parent.formatDate(day)}})
       },
       eventClick (event) {

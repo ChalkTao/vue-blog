@@ -82,7 +82,7 @@
           this.goal.push(response.data.data)
           this.sort()
         }, response => {
-          var msg = response.data.error_msg || '添加失败'
+          var msg = (response.data && response.data.error_msg) || '添加失败'
           this.$message.error(msg)
         })
       },
@@ -94,7 +94,7 @@
           item.status = !item.status
           this.sort()
         }, response => {
-          var msg = response.data.error_msg || '更新失败'
+          var msg = (response.data && response.data.error_msg) || '更新失败'
           this.$message.error(msg)
         })
       },
@@ -112,7 +112,7 @@
               message: '删除成功!'
             })
           }, response => {
-            var msg = response.data.error_msg || '删除失败'
+            var msg = (response.data && response.data.error_msg) || '删除失败'
             this.$message.error(msg)
           })
         }).catch(() => {
@@ -138,7 +138,7 @@
           this.goal = response.data.data
           this.sort()
         }, response => {
-          var msg = response.data.error_msg || '获取失败'
+          var msg = (response.data && response.data.error_msg) || '获取失败'
           this.$message.error(msg)
         })
       })

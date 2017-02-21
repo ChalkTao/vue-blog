@@ -14,17 +14,17 @@
         </ul>
         <div class="tab-content no-padding">
           <div id="task-chart" class="chart tab-pane active" style="position: relative; min-height: 400px;">
-            <draggable :list="tasks" @start="drag=true" @end="drag=false" @change="moveTask">
+            <draggable :list="tasks" @start="drag=true" @end="drag=false" @change="moveTask" :options="{disabled: isFuture}">
               <div class="todo-list" v-for="(element, index) in tasks">
                 <span class="handle">
                         <i class="fa fa-ellipsis-v"></i>
                         <i class="fa fa-ellipsis-v"></i>
                       </span>
                 <small class="label" :class="'label-'+getClass(element.category)"> {{element.category}}</small>
-                <input type="checkbox" value="" v-model="element.status" @click="finish(index)">
+                <input type="checkbox" value="" v-model="element.status" @click="finish(index)" :disabled="isFuture">
                 <span class="text">{{element.content}}</span>
                 <!--<small class="label" :class="'label-'+getClass"><i class="fa fa-clock-o"></i> {{category}}</small>-->
-                <div class="tools">
+                <div class="tools" v-show="!isFuture && element.category==='日常'">
                   <i class="fa fa-trash-o" @click="deleteItem(index)"></i>
                 </div>
               </div>
@@ -139,7 +139,7 @@
         }).then(response => {
           this.$message.success('成功')
         }, response => {
-          var msg = response.data.error_msg || '更新失败'
+          var msg = (response.data && response.data.error_msg) || '更新失败'
           this.$message.error(msg)
         })
       },
@@ -155,7 +155,7 @@
         }).then(response => {
           this.$message.success('成功')
         }, response => {
-          var msg = response.data.error_msg || '更新失败'
+          var msg = (response.data && response.data.error_msg) || '更新失败'
           this.$message.error(msg)
         })
       },
@@ -174,7 +174,8 @@
         this.category = cat
       },
       getClass: function (category) {
-        return category === this.tab_list[0] ? 'danger' : 'info'
+        const color = ['info', 'danger', 'success']
+        return color[this.tab_list.indexOf(category) + 1]
       },
       finish: function (index) {
         var item = this.tasks[index]
@@ -231,12 +232,17 @@
         }).then(response => {
           this.$message.success('成功')
         }, response => {
-          var msg = response.data.error_msg || '更新失败'
+          var msg = (response.data && response.data.error_msg) || '更新失败'
           this.$message.error(msg)
         })
       }
     },
     computed: {
+      isFuture: function () {
+        var time = new Date(this.currentDay).getTime() - new Date().getTime()
+        var day = Math.floor(time / (24 * 60 * 60 * 1000))
+        return day >= 0
+      }
     },
     mounted () {
       this.$watch('day', function () {
@@ -259,7 +265,7 @@
           })
           this.state = response.data.data.state
         }, response => {
-          var msg = response.data.error_msg || '获取失败'
+          var msg = (response.data && response.data.error_msg) || '获取失败'
           this.$message.error(msg)
         })
       })
