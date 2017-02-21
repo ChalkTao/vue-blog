@@ -1,14 +1,14 @@
 <template>
   <aside class="main-sidebar">
     <section class="sidebar">
-      <form @submit.prevent="search()" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="search" id="search" class="search form-control" data-toggle="hideseek" placeholder="Search Menus" data-list=".sidebar-menu">
-          <span class="input-group-btn">
-            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-          </span>
-        </div>
-      </form>
+      <!--<form @submit.prevent="search()" class="sidebar-form">-->
+        <!--<div class="input-group">-->
+          <!--<input type="text" name="search" id="search" class="search form-control" data-toggle="hideseek" placeholder="Search Menus" data-list=".sidebar-menu">-->
+          <!--<span class="input-group-btn">-->
+            <!--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>-->
+          <!--</span>-->
+        <!--</div>-->
+      <!--</form>-->
 
       <ul class="sidebar-menu">
         <li class="active pageLink" @click="toggleMenu"><router-link :to="{name: 'admin_dashboard'}"><i class="fa fa-desktop"></i><span class="page">首页</span></router-link></li>
