@@ -82,7 +82,7 @@
         </div>
         <input class="form-control" v-model="content" placeholder="新建任务">
         <div class="input-group-btn">
-          <button type="button" class="btn btn-success" @click="addItem"><i class="fa fa-plus"></i></button>
+          <button type="button" class="btn" :class="'btn-'+getClass(category)" @click="addItem"><i class="fa fa-plus"></i></button>
         </div>
       </div>
       <div class="input-group" v-show="tab==='event'">

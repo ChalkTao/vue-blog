@@ -9,11 +9,7 @@ const state = {
   serverURI: 'http://10.110.1.136:8080',
   user: null,
   token: null,
-  userInfo: {
-    messages: [{1: 'test', 2: 'test'}],
-    notifications: [],
-    tasks: []
-  }
+  tasks: []
 }
 
 const mutations = {
@@ -28,6 +24,9 @@ const mutations = {
   },
   SET_TOKEN (state, token) {
     state.token = token
+  },
+  SET_TASKS (state, tasks) {
+    state.tasks = tasks
   }
 }
 

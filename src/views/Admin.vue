@@ -32,18 +32,29 @@
       },
       fill: function (num) {
         return num >= 10 ? num : '0' + num
+      },
+      logout: function () {
+        this.$store.commit('SET_USER', '')
+        this.$store.commit('SET_TOKEN', '')
+        if (window.localStorage) {
+          window.localStorage.setItem('user', '')
+          window.localStorage.setItem('token', '')
+        }
+        this.$router.push('/login')
       }
-//      logout: function () {
-//        this.$store.dispatch('SET_USER', null)
-//        this.$store.dispatch('SET_TOKEN', null)
-//
-//        if (window.localStorage) {
-//          window.localStorage.setItem('user', null)
-//          window.localStorage.setItem('token', null)
-//        }
-//
-//        this.$router.push('/login')
-//      }
+    },
+    mounted () {
+      let tmpDate = new Date()
+      let year = tmpDate.getFullYear()
+      let month = this.fill(tmpDate.getMonth() + 1)
+      let day = this.fill(tmpDate.getDate())
+      let date = year + '-' + month + '-' + day
+      this.$http.get('task/daily/' + date).then(response => {
+        this.$store.commit('SET_TASKS', response.data.data.tasks)
+      }, response => {
+        var msg = (response.data && response.data.error_msg) || '获取失败'
+        this.$message.error(msg)
+      })
     }
   }
 </script>

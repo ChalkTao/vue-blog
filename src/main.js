@@ -46,7 +46,7 @@ const router = new VueRouter({
   }
 })
 
-if (window.localStorage) {
+if (window.localStorage && window.localStorage.getItem('token')) {
   if (store.state.token !== window.localStorage.getItem('token')) {
     store.commit('SET_USER', JSON.parse(window.localStorage.getItem('user')))
     store.commit('SET_TOKEN', window.localStorage.getItem('token'))

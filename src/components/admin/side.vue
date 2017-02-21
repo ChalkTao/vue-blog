@@ -21,8 +21,8 @@
         <li class="pageLink" @click="toggleMenu"><router-link :to="{name: 'calendar'}"><i class="fa fa-calendar"></i><span class="page">日历</span></router-link></li>
         <li class="pageLink" @click="toggleMenu"><router-link :to="{name: 'task', params: { day: 'now' }}"><i class="fa fa-tasks"></i><span class="page">任务</span></router-link></li>
 
-        <li class="header">个人</li>
-        <li class="pageLink" @click="toggleMenu"><router-link to="/setting"><i class="fa fa-cog"></i><span class="page">设置</span></router-link></li>
+        <!--<li class="header">个人</li>-->
+        <!--<li class="pageLink" @click="toggleMenu"><router-link to="/setting"><i class="fa fa-cog"></i><span class="page">设置</span></router-link></li>-->
 
       </ul>
     </section>

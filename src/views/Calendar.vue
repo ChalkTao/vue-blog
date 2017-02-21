@@ -47,4 +47,13 @@
   .full-calendar-body .events-day {
     min-height: 98px !important;
   }
+  .fail {
+    background-color: red !important;
+  }
+  .success {
+    background-color: green !important;
+  }
+  .important {
+    background-color: yellow !important;
+  }
 </style>
