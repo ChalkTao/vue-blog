@@ -9,7 +9,9 @@ const state = {
   serverURI: 'http://10.110.1.136:8080',
   user: null,
   token: null,
-  tasks: []
+  tasks: [],
+  uptoken: '',
+  domain: ''
 }
 
 const mutations = {
@@ -24,6 +26,12 @@ const mutations = {
   },
   SET_TOKEN (state, token) {
     state.token = token
+  },
+  SET_UPTOKEN (state, token) {
+    state.uptoken = token
+  },
+  SET_DOMAIN (state, domain) {
+    state.domain = domain
   },
   SET_TASKS (state, tasks) {
     state.tasks = tasks

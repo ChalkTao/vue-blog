@@ -27,12 +27,13 @@ Vue.http.interceptors.push((request, next) => {
     Vue.http.headers.common.Authorization = 'Bearer ' + window.localStorage.getItem('token').replace(/(^")|("$)/g, '')
   }
   next((response) => {
-    // if (response.status === 401) {
-    //   if (window.localStorage) {
-    //     window.localStorage.setItem('token', null)
-    //   }
-      // router.go({path: '/login'})
-    // }
+    if (response.status === 401) {
+      if (window.localStorage) {
+        window.localStorage.setItem('token', null)
+      }
+      console.log(router.path)
+      router.push({path: '/login'})
+    }
   })
 })
 

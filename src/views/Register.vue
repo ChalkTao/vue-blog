@@ -67,7 +67,7 @@
             window.localStorage.setItem('user', JSON.stringify(response.data.user))
           }
           this.loading = false
-          this.$router.push({name: 'admin'})
+          this.$router.push({name: 'admin_dashboard'})
         }, response => {
           var msg = (response.data && response.data.error_msg) || '注册失败'
           this.$message.error(msg)

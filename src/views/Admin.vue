@@ -57,6 +57,12 @@
         var msg = (response.data && response.data.error_msg) || '获取失败'
         this.$message.error(msg)
       })
+      this.$http.get('config/imageDomain').then(response => {
+        this.$store.commit('SET_DOMAIN', response.data.domain)
+      }, response => {
+        var msg = (response.data && response.data.error_msg) || '获取失败'
+        this.$message.error(msg)
+      })
     }
   }
 </script>

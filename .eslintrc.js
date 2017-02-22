@@ -10,6 +10,10 @@ module.exports = {
   plugins: [
     'html'
   ],
+  'globals': {
+    'FileReader': true,
+    'XMLHttpRequest': true
+  },
   // add your custom rules here
   'rules': {
     // allow paren-less arrow functions

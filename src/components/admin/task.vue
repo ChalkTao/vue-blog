@@ -72,7 +72,7 @@
     </div>
 
     <div class="box-footer clearfix no-border">
-      <div class="input-group" v-show="tab==='task'">
+      <form class="input-group" v-show="tab==='task'" @submit.prevent="addItem">
         <div class="input-group-btn">
           <button type="button" class="btn dropdown-toggle" :class="'btn-'+getClass(category)" data-toggle="dropdown" aria-expanded="false">{{category}}
             <span class="fa fa-caret-down"></span></button>
@@ -82,9 +82,9 @@
         </div>
         <input class="form-control" v-model="content" placeholder="新建任务">
         <div class="input-group-btn">
-          <button type="button" class="btn" :class="'btn-'+getClass(category)" @click="addItem"><i class="fa fa-plus"></i></button>
+          <button type="submit" class="btn" :class="'btn-'+getClass(category)" ><i class="fa fa-plus"></i></button>
         </div>
-      </div>
+      </form>
       <div class="input-group" v-show="tab==='event'">
         <div class="input-group-btn">
           <button type="button" class="btn dropdown-toggle" :class="'btn-'+getScoreClass(score)" data-toggle="dropdown" aria-expanded="false">{{score}}

@@ -134,6 +134,32 @@
         } else {
           _this.labels = []
         }
+      },
+      pubt64 (pic, imageFile) {
+        const _this = this
+        this.$message({
+          showClose: true,
+          message: '图片上传中'
+        })
+        var url = 'http://upload.qiniu.com/putb64/' + imageFile.size
+        var xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            console.log(xhr.responseText)
+            var dataImg = JSON.parse(xhr.responseText)
+            _this.article.content = _this.article.content +
+              '\n![](' + _this.$store.state.domain + dataImg.key + ')'
+          }
+          _this.$message({
+            showClose: true,
+            message: '图片上传成功',
+            type: 'success'
+          })
+        }
+        xhr.open('POST', url, true)
+        xhr.setRequestHeader('Content-Type', 'application/octet-stream')
+        xhr.setRequestHeader('Authorization', 'UpToken ' + this.$store.state.uptoken)
+        xhr.send(pic)
       }
     },
     computed: {
@@ -169,6 +195,22 @@
         console.log(changeObj)
         if (changeObj === 'fullScreen') {
           this.$parent.fullScreen(this.simplemde.isFullscreenActive())
+        }
+      })
+      this.simplemde.codemirror.on('paste', (instance, e) => {
+        console.log(e.clipboardData.items)
+        for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
+          if (e.clipboardData.items[i].kind === 'file' && /image\//.test(e.clipboardData.items[i].type)) {
+            var imageFile = e.clipboardData.items[i].getAsFile()
+            var fileReader = new FileReader()
+            fileReader.onloadend = function (e) {
+//              console.log(e.target.result)
+              _this.pubt64(e.target.result.replace('data:image/png;base64,', ''), imageFile)
+            }
+            fileReader.readAsDataURL(imageFile)
+            e.preventDefault()
+            break
+          }
         }
       })
     }
