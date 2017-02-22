@@ -91,12 +91,12 @@
         start: '',
         end: '',
         taskDonut: [
-          { label: '未完成', value: 0 },
-          { label: '已完成', value: 0 }
+          { label: '未完成', value: 1 },
+          { label: '已完成', value: 1 }
         ],
         scoreDonut: [
-          { label: '扣分', value: 0 },
-          { label: '加分', value: 0 }
+          { label: '扣分', value: 1 },
+          { label: '加分', value: 1 }
         ],
         taskLine: [
           { date: '2017-01-01', finish: 0, total: 0 }
