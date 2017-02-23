@@ -100,6 +100,10 @@
             _this.$http.put('article/' + _this.article._id, _this.article).then(response => {
               window.console.log(response.data)
               _this.$message.success('成功')
+              _this.article.content = ''
+              if (window.localStorage) {
+                window.localStorage.setItem('content', '')
+              }
               _this.$router.push({name: 'articles'})
             }, response => {
               var msg = (response.data && response.data.error_msg) || '创建失败'
@@ -213,6 +217,16 @@
           }
         }
       })
+      if (window.localStorage && window.localStorage.getItem('content')) {
+        console.log(window.localStorage.getItem('content'))
+        this.article.content = window.localStorage.getItem('content')
+      }
+    },
+    beforeRouteLeave (to, from, next) {
+      if (this.article.content && window.localStorage) {
+        window.localStorage.setItem('content', this.article.content)
+      }
+      next()
     }
   }
 

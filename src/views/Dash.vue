@@ -20,8 +20,8 @@
             </div>
             <div class="box-body">
               <area-chart
-                id="task-area" :data="taskLine" xkey="date" ykeys='[ "finish", "total" ]' resize="true"
-                labels='[ "完成任务", "总任务" ]' line-colors='[ "#FF6384", "#36A2EB" ]'
+                id="task-area" :data="taskLine" xkey="date" ykeys='[ "finish", "task" ]' resize="true"
+                labels='[ "完成任务", "未完成" ]' line-colors='[ "#FF6384", "#36A2EB" ]'
                 grid="true" grid-text-weight="bold">
               </area-chart>
             </div>
@@ -99,7 +99,7 @@
           { label: '加分', value: 1 }
         ],
         taskLine: [
-          { date: '2017-01-01', finish: 0, total: 0 }
+          { date: '2017-01-01', finish: 0, task: 0 }
         ],
         scoreLine: [
           { date: '2017-01-01', score: 0 }
