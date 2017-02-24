@@ -48,20 +48,20 @@
           <table class="table table-bordered" v-show="articles.length>0">
             <tbody>
             <tr>
-              <th style="width: 12px">时间</th>
-              <th style="width: 260px; overflow: hidden">标题</th>
-              <th style="width: 100px">分类</th>
-              <th>标签</th>
-              <th style="width: 30px">状态</th>
+              <th style="width: 12px" class="hidden-xs">时间</th>
+              <th class="table-title">标题</th>
+              <th class="table-category">分类</th>
+              <th class="hidden-xs">标签</th>
+              <th style="width: 30px" class="hidden-xs">状态</th>
               <th style="width: 100px">操作</th>
             </tr>
             <tr v-for="(item, index) in articles">
-              <td>{{item.created | formatDate}}</td>
+              <td class="hidden-xs">{{item.created | formatDate}}</td>
               <td>{{item.title}}</td>
               <td>{{item.category}}</td>
-              <td><span v-for="label in item.labels" class="label label-success"
+              <td class="hidden-xs"><span v-for="label in item.labels" class="label label-success"
                         style="margin-right: 4px;">{{label}}</span></td>
-              <td><button class="btn btn-xs" :class="item.publish? 'btn-success' : 'btn-info'">
+              <td class="hidden-xs"><button class="btn btn-xs" :class="item.publish? 'btn-success' : 'btn-info'">
                 {{item.publish? '发布':'草稿'}}
               </button></td>
               <td>
@@ -80,7 +80,7 @@
                            :current-page="currentPage"
                            :page-sizes="[10, 20, 50]"
                            :page-size="options.limit"
-                           layout="total, sizes, prev, pager, next, jumper"
+                           :layout="layout"
                            :total="total">
             </el-pagination>
           </div>
@@ -109,7 +109,8 @@
         },
         labels: [],
         categories: [],
-        categoryInfo: {}
+        categoryInfo: {},
+        layout: 'total, sizes, prev, pager, next, jumper'
       }
     },
     methods: {
@@ -187,6 +188,9 @@
       }
     },
     mounted () {
+      if (screen.width < 500) {
+        this.layout = 'total, prev, pager, next'
+      }
       this.getArticle()
       const _this = this
       const uid = this.$store.state.user._id
@@ -211,5 +215,19 @@
   thead {
     color: #1f2d3d;
     background-color: #eef1f6 !important;
+  }
+  .table-title {
+    width: 260px;
+  }
+  .table-category {
+    width: 100px;
+  }
+  @media screen and (max-width: 500px) {
+    .table-title {
+      width: 100px;
+    }
+    .table-category {
+      width: 60px;
+    }
   }
 </style>

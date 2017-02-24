@@ -7,10 +7,11 @@ import store from './vuex/store'
 import filters from './utils/filters'
 import routes from './routes'
 import AppView from './views/App.vue'
-import config from '../config'
+import _config from '../config'
 import ElementUI from 'element-ui'
 import VueSimplemde from 'vue-simplemde'
 import 'element-ui/lib/theme-default/index.css'
+const config = process.env.NODE_ENV === 'production' ? _config.build : _config.dev
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -19,7 +20,7 @@ Vue.use(VueSimplemde)
 
 Vue.http.options.crossOrigin = true
 Vue.http.options.credentials = true
-Vue.http.options.root = config.dev.env.API_ROOT
+Vue.http.options.root = config.env.API_ROOT
 Vue.http.interceptors.push((request, next) => {
   // 这里对请求体进行处理
   request.headers = request.headers || {}

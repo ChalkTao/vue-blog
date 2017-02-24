@@ -24,7 +24,7 @@
                 <input type="checkbox" value="" v-model="element.status" @click="finish(index)" :disabled="isFuture">
                 <span class="text">{{element.content}}</span>
                 <!--<small class="label" :class="'label-'+getClass"><i class="fa fa-clock-o"></i> {{category}}</small>-->
-                <div class="tools" v-show="!isFuture && element.category==='日常'">
+                <div class="tools" v-show="!isFuture || element.category!=='日常'">
                   <i class="fa fa-trash-o" @click="deleteItem(index)"></i>
                 </div>
               </div>

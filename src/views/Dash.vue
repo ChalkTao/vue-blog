@@ -21,7 +21,7 @@
             <div class="box-body">
               <area-chart
                 id="task-area" :data="taskLine" xkey="date" ykeys='[ "finish", "task" ]' resize="true"
-                labels='[ "完成任务", "未完成" ]' line-colors='[ "#FF6384", "#36A2EB" ]'
+                labels='[ "完成任务", "未完成" ]' line-colors='[ "#36A2EB", "#FF6384"  ]'
                 grid="true" grid-text-weight="bold">
               </area-chart>
             </div>
@@ -57,7 +57,7 @@
               </div>
             </div>
             <div class="box-body">
-              <donut-chart id="task-donut" :data="taskDonut" colors='[ "red", "green" ]' resize="true"></donut-chart>
+              <donut-chart id="task-donut" :data="taskDonut" colors='[ "#FF6384", "#36A2EB" ]' resize="true"></donut-chart>
             </div>
           </div>
           <div class="box box-success">
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div class="box-body">
-              <donut-chart id="score-donut" :data="scoreDonut" colors='[ "red", "green" ]' resize="true"></donut-chart>
+              <donut-chart id="score-donut" :data="scoreDonut" colors='[ "#FF6384", "#36A2EB" ]' resize="true"></donut-chart>
             </div>
           </div>
         </section>

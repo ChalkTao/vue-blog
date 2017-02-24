@@ -12,7 +12,8 @@ module.exports = {
   ],
   'globals': {
     'FileReader': true,
-    'XMLHttpRequest': true
+    'XMLHttpRequest': true,
+    'screen': true
   },
   // add your custom rules here
   'rules': {
