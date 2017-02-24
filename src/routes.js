@@ -1,9 +1,3 @@
-const Home = resolve => {
-  require.ensure(['./views/Home.vue'], () => {
-    resolve(require('./views/Home.vue'))
-  })
-}
-
 import LoginView from './views/Login.vue'
 import RegisterView from './views/Register.vue'
 import NotFoundView from './views/NotFound.vue'
@@ -26,7 +20,7 @@ const routers = [
     component: RegisterView
   },
   {
-    path: '/admin',
+    path: '/',
     component: AdminView,
     meta: { requiresAuth: true },
     children: [
@@ -58,10 +52,6 @@ const routers = [
     ]
   },
   {
-    path: '/',
-    name: 'home',
-    component: Home
-  }, {
     path: '*',
     component: NotFoundView
   }

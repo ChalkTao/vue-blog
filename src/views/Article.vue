@@ -50,7 +50,7 @@
       </div>
 
       <div>
-        <markdown-editor v-model="article.content" ref="markdownEditor"></markdown-editor>
+        <markdown-editor v-model="article.content" :configs="configs" ref="markdownEditor"></markdown-editor>
       </div>
 
     </section>
@@ -151,8 +151,11 @@
           if (xhr.readyState === 4) {
             console.log(xhr.responseText)
             var dataImg = JSON.parse(xhr.responseText)
-            _this.article.content = _this.article.content +
-              '\n![](' + _this.$store.state.domain + dataImg.key + ')'
+//            _this.article.content = _this.article.content +
+//              '\n![](' + _this.$store.state.domain + dataImg.key + ')'
+            var pos = _this.simplemde.codemirror.getCursor()
+            _this.simplemde.codemirror.setSelection(pos, pos)
+            _this.simplemde.codemirror.replaceSelection('\n![](' + _this.$store.state.domain + dataImg.key + ')')
           }
           _this.$message({
             showClose: true,
@@ -202,7 +205,6 @@
         }
       })
       this.simplemde.codemirror.on('paste', (instance, e) => {
-        console.log(e.clipboardData.items)
         for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
           if (e.clipboardData.items[i].kind === 'file' && /image\//.test(e.clipboardData.items[i].type)) {
             var imageFile = e.clipboardData.items[i].getAsFile()
