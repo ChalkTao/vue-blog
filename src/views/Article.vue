@@ -84,7 +84,11 @@
           ]
         },
         configs: {
-          spellChecker: false // 禁用拼写检查
+          spellChecker: false, // 禁用拼写检查
+          renderingConfig: {
+            codeSyntaxHighlighting: true, // 开启代码高亮
+            highlightingTheme: 'atom-one-light' // 自定义代码高亮主题，可选列表(https://github.com/isagalaev/highlight.js/tree/master/src/styles)
+          }
         },
         loading: false,
         labels: [],
