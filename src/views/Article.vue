@@ -15,7 +15,7 @@
                   <el-form-item label="文章题目" prop="title">
                     <el-input v-model="article.title"></el-input>
                   </el-form-item>
-                  <el-form-item label="文章标签">
+                  <el-form-item label="文章标签" v-show="!fullScreen">
                     <el-select v-model="article.labels" multiple filterable allow-create
                                placeholder="请选择文章标签">
                       <el-option v-for="item in labels" :label="item" :value="item">
@@ -91,6 +91,7 @@
           }
         },
         loading: false,
+        fullScreen: false,
         labels: [],
         categories: [],
         categoryInfo: {}
@@ -205,6 +206,7 @@
       this.simplemde.codemirror.on('optionChange', (instance, changeObj) => {
         console.log(changeObj)
         if (changeObj === 'fullScreen') {
+          this.fullScreen = this.simplemde.isFullscreenActive()
           this.$parent.fullScreen(this.simplemde.isFullscreenActive())
         }
       })
